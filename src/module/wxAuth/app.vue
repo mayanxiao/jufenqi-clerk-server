@@ -23,7 +23,7 @@ export default {
     methods: {
         getCode() {
             if (this.code) {
-                axios.post(`${Lib.C.userApi}auth/loginUsingWechatQy`, {
+                axios.post(`${Lib.C.userApi}auth/loginUsingWechatQy`,{}, {
                     params: {
                         code: this.code
                     },

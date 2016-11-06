@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-  <div class="order" v-for="order in zcList" v-tap="viewDetail('zc',order.orderNo)">
+  <div class="order" v-for="order in zcList" v-tap="viewDetail('zc',order.id)">
     <img :src="order.customerImage">
     <!-- <div class="tel" onclick="location.href='tel:{{order.customerMobile}}'">{{order.customerMobile}}</div> -->
     <div class="name">{{order.customerName}}</div>
@@ -78,8 +78,8 @@ export default {
             var D = (d.getDate() < 10 ? '0' + (d.getDate()) : d.getDate());
             return Y + M + D
         },
-        viewDetail(type, orderNo) {
-            eval(`window.location.href='${type}-order.html?orderNo=${orderNo}'`)
+        viewDetail(type, id) {
+            eval(`window.location.href='${type}-order.html?id=${id}'`)
         }
     }
 }

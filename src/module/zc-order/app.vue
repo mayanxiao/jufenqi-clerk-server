@@ -11,43 +11,29 @@
 <div class="content">
 
   <div class="zc-list">
-    <group v-for="shop in order.subOrders">
+    <group>
       <div class="line-1">
-        <div class="shop-name">{{shop.store.name}}</div>
+        <div class="shop-name">{{order.store.name}}</div>
         <div class="btn" v-if="order.status==5" onclick="location.href='order-judge.html'">去评价</div>
       </div>
-      <cell v-for="zc in shop.brands" class="zc-cell">
+      <cell v-for="zc in order.brands" class="zc-cell">
         <div class="zc-name">{{zc}}</div>
       </cell>
       <div class="line-2" v-if="order.status > 1">
         <div class="line-2-title">正价总额</div>
-        <div class="line-2-right" style="color:rgb(255, 204, 102);">{{shop.normalAmount|currency "￥" 2}}</div>
+        <div class="line-2-right" style="color:rgb(255, 204, 102);">{{order.normalAmount|currency "￥" 2}}</div>
       </div>
       <div class="line-2" v-if="order.status > 1">
         <div class="line-2-title">特价总额</div>
-        <div class="line-2-right" style="color:#88C929;">{{shop.specialAmount|currency "￥" 2}}</div>
+        <div class="line-2-right" style="color:#88C929;">{{order.specialAmount|currency "￥" 2}}</div>
       </div>
       <div class="line-2" style="border-top:5px solid #eee!important;" v-if="order.status > 1">
         <div class="line-2-title">总额</div>
-        <div class="line-2-right">{{shop.normalAmount+shop.specialAmount|currency "￥" 2}}</div>
+        <div class="line-2-right">{{order.normalAmount+order.specialAmount|currency "￥" 2}}</div>
       </div>
       <div class="line-3" v-if="order.status ==1||order.status == 2||order.status ==5">
         <div class="appoint-at" v-if="order.status == 1"><img src="./time.png">{{getTime(order.orderTime)}}</div>
         <!-- <div class="cancel">{{order.status == 1?"取消预约":(order.status == 2?"取消订单":"申请退款")}}</div> -->
-      </div>
-    </group>
-    <group title="订单总计">
-      <div class="line-2" v-if="order.status > 1">
-        <div class="line-2-title">正价总额</div>
-        <div class="line-2-right" style="color:rgb(255, 204, 102);">{{getCount("normalAmount",order.subOrders)|currency "￥" 2}}</div>
-      </div>
-      <div class="line-2" v-if="order.status > 1">
-        <div class="line-2-title">特价总额</div>
-        <div class="line-2-right" style="color:#88C929;">{{getCount("specialAmount",order.subOrders)|currency "￥" 2}}</div>
-      </div>
-      <div class="line-2" style="border-top:5px solid #eee!important;" v-if="order.status > 1 ">
-        <div class="line-2-title">订单总额</div>
-        <div class="line-2-right">{{getAllCount(order.subOrders)|currency "￥" 2}}</div>
       </div>
     </group>
     <group v-if="order.status > 2">
@@ -127,7 +113,7 @@ export default {
     }
   },
   ready() {
-    axios.get(`${Lib.C.mOrderApi}materialOrders/${Lib.M.GetRequest().orderNo}`).then((res) => {
+    axios.get(`${Lib.C.mOrderApi}materialSubOrders/${Lib.M.GetRequest().id}`).then((res) => {
       this.order = res.data.data
     }).catch((res) => {
       alert("获取订单失败，请稍候再试QAQ")
@@ -140,25 +126,11 @@ export default {
     // PopupPicker
   },
   methods: {
-    getCount(type, orders){
-      let count = 0
-      orders.map((e)=>{
-        count += e[type]
-      })
-      return count
-    },
-    getAllCount(orders){
-      let count = 0
-      orders.map((e)=>{
-          count += (e.specialAmount+e.normalAmount)
-      })
-      return count
-    },
     selectPay(e) {
       this.payWay = Number(e)
     },
     confirm(){
-      axios.post(`${Lib.C.mOrderApi}materialOrders/${Lib.M.GetRequest().orderNo}/storeConfirmMaterial`).then((res) => {
+      axios.post(`${Lib.C.mOrderApi}materialSubOrders/${Lib.M.GetRequest().id}/storeConfirmMaterial`).then((res) => {
           alert("订单已更新！")
           location.reload()
       }).catch((res) => {

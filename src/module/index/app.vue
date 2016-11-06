@@ -2,7 +2,7 @@
 <div class="content">
   <div class="order" v-for="order in zcList" v-tap="viewDetail('zc',order.orderNo)">
     <img :src="order.customerImage">
-    <div class="tel" onclick="location.href='tel:{{order.customerMobile}}'">{{order.customerMobile}}</div>
+    <!-- <div class="tel" onclick="location.href='tel:{{order.customerMobile}}'">{{order.customerMobile}}</div> -->
     <div class="name">{{order.customerName}}</div>
     <div class="status">{{zcStatusList[order.status].name}}</div>
 </div>

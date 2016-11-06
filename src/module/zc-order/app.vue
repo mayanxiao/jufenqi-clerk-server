@@ -56,7 +56,7 @@
     </group>
   </div>
 </div>
-<div v-if="order.status == 2&&order.managerUploaded" class="status-3-btn" v-tap="confirm()">确认订单</div>
+<div v-if="order.status == 2&&(!order.storeConfirmed)" class="status-3-btn" v-tap="confirm()">确认订单</div>
 <!-- <popup-picker title="分期数" :data="insNumberList" :show.sync="showInsNumberPicker" :value.sync="insNumberSelect" @on-hide="onHideInsSelect" v-ref:insNumber :show-cell="false"></popup-picker> -->
 </template>
 

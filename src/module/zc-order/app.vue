@@ -27,7 +27,7 @@
         <div class="line-2-title">特价总额</div>
         <div class="line-2-right" style="color:#88C929;">{{shop.specialAmount|currency "￥" 2}}</div>
       </div>
-      <div class="line-2" style="border-top:5px solid #eee!important;" v-if="status > 1">
+      <div class="line-2" style="border-top:5px solid #eee!important;" v-if="order.status > 1">
         <div class="line-2-title">总额</div>
         <div class="line-2-right">{{shop.normalAmount+shop.specialAmount|currency "￥" 2}}</div>
       </div>
@@ -36,15 +36,20 @@
         <!-- <div class="cancel">{{order.status == 1?"取消预约":(order.status == 2?"取消订单":"申请退款")}}</div> -->
       </div>
     </group>
-    <!-- <group v-if="order.status == 2">
-      <div class="line-2" style="border-bottom:1px solid #eee;height:30px;line-height:30px;">
-        <div class="line-2-title" style="line-height:30px">请选择您的购买方式</div>
+    <group title="订单总计">
+      <div class="line-2" v-if="order.status > 1">
+        <div class="line-2-title">正价总额</div>
+        <div class="line-2-right" style="color:rgb(255, 204, 102);">{{getCount("normalAmount",order.subOrders)|currency "￥" 2}}</div>
       </div>
-      <j-radio :options="payments" @on-change="selectPay"></j-radio>
+      <div class="line-2" v-if="order.status > 1">
+        <div class="line-2-title">特价总额</div>
+        <div class="line-2-right" style="color:#88C929;">{{getCount("specialAmount",order.subOrders)|currency "￥" 2}}</div>
+      </div>
+      <div class="line-2" style="border-top:5px solid #eee!important;" v-if="order.status > 1 ">
+        <div class="line-2-title">订单总额</div>
+        <div class="line-2-right">{{getAllCount(order.subOrders)|currency "￥" 2}}</div>
+      </div>
     </group>
-    <group v-if="order.status == 2">
-      <div class="sumbit-order" :class="{'active':payWay!==''}" v-tap="submitOrder">确认订单</div>
-    </group> -->
     <group v-if="order.status > 2">
       <div class="line-2" v-if="order.stageCount !== ''">
         <div class="line-2-title">分期支付</div>
@@ -135,6 +140,19 @@ export default {
     // PopupPicker
   },
   methods: {
+    getCount(type, orders){
+      let count = 0
+      orders.map((e)=>{
+        count += e[type]
+      })
+      return count
+    },
+    getAllCount(orders){
+      let count = 0
+      orders.map((e)=>{
+          count += (e.specialAmount+e.normalAmount)
+      })
+    },
     selectPay(e) {
       this.payWay = Number(e)
     },

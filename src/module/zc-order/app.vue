@@ -152,6 +152,7 @@ export default {
       orders.map((e)=>{
           count += (e.specialAmount+e.normalAmount)
       })
+      return count
     },
     selectPay(e) {
       this.payWay = Number(e)

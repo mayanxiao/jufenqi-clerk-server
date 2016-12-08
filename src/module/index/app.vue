@@ -204,9 +204,8 @@ export default {
     ready() {
         axios.get(`${Lib.C.mOrderApi}materialOrders/byStoreUser`, {
             params: {
-                filter: `status:1,3,4,5`,
+                filter: `status:1,3,4,5|clerkId:${JSON.parse(localStorage.getItem('clerk')).userId}`,
                 sort: "createdAt,desc",
-                userId: JSON.parse(localStorage.getItem('clerk')).userId,
                 size: 1000
             }
         }).then((res) => {

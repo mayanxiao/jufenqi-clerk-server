@@ -1,7 +1,7 @@
 {
-  "name": "jufenqi-store",
+  "name": "jufenqi-clerk-server",
   "version": "0.1.0",
-  "description": "居分期门店端",
+  "description": "居分期店员端",
   "author": "lsvih",
   "scripts": {
     "dev": "node build/dev-server.js",

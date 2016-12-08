@@ -202,7 +202,7 @@ export default {
         JPerson
     },
     ready() {
-        axios.get(`${Lib.C.mOrderApi}materialOrders/byStoreUser`, {
+        axios.get(`${Lib.C.mOrderApi}materialOrders`, {
             params: {
                 filter: `status:1,3,4,5|clerkId:${JSON.parse(localStorage.getItem('clerk')).userId}`,
                 sort: "createdAt,desc",

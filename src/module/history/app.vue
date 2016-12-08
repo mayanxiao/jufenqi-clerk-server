@@ -132,7 +132,7 @@ export default {
         JFooter,
     },
     ready() {
-        axios.get(`${Lib.C.mOrderApi}materialOrders/byStoreUser`, {
+        axios.get(`${Lib.C.mOrderApi}materialOrders`, {
             params: {
                 filter: `status:0,6|clerkId:${JSON.parse(localStorage.getItem('clerk')).userId}`,
                 sort: "createdAt,desc",

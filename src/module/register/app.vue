@@ -4,7 +4,7 @@
     <div class="phone-number"><img src="./login.png"><input type="tel" placeholder="请输入注册手机号码" v-model="phoneNumber"></div>
     <div class="password"><img src="./password.png"><input type="password" placeholder="请输入注册密码" v-model="password"></div>
     <!-- <div class="user-agreement">我已阅读并同意<b>居分期用户协议</b></div> -->
-    <div class="submit" v-bind:class="{'active':isTruePhoneNum()}" v-tap="isTruePhoneNum()?gotoRegister():return;"}" v-tap="gotoRegister()">注 册</div>
+    <div class="submit" v-bind:class="{'active':isTruePhoneNum()}" v-tap="isTruePhoneNum()?gotoRegister():return;">注 册</div>
     <div class="back" v-tap="gotoLogin()">返回登陆</div>
 
 </div>

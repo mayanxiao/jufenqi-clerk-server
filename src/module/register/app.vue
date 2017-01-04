@@ -4,7 +4,7 @@
     <div class="phone-number"><img src="./login.png"><input type="tel" placeholder="请输入注册手机号码" v-model="phoneNumber"></div>
     <div class="password"><img src="./password.png"><input type="password" placeholder="请输入注册密码" v-model="password"></div>
     <!-- <div class="user-agreement">我已阅读并同意<b>居分期用户协议</b></div> -->
-    <div class="submit" v-bind:class="{'active':isTruePhoneNum()}" v-tap="isTruePhoneNum()?gotoRegister():return;">注 册</div>
+    <div class="submit" v-bind:class="{'active':isTruePhoneNum()}" v-tap="isTruePhoneNum()?gotoRegister():return;"}" v-tap="gotoRegister()">注 册</div>
     <div class="back" v-tap="gotoLogin()">返回登陆</div>
 
 </div>
@@ -22,7 +22,8 @@ export default {
         return {
             phoneNumber: "",
             password: "",
-            loading: false
+            loading: false,
+            debugMode: true
         }
     },
     components: {
@@ -30,33 +31,16 @@ export default {
     },
     methods: {
         isTruePhoneNum() {
+            if(this.debugMode == true){
+                return true
+            }
             let reg = /^1[3|4|5|7|8]\d{9}$/
             return (reg.test(String(this.phoneNumber)) && this.password)
         },
         gotoRegister() {
-            this.loading = true
-            axios.post(`${Lib.C.userApi}auth/register`,
-                {
-                    "mobile": this.phoneNumber,
-                    "password": this.password
-                },
-                {
-                    withCredentials: true,
-                    responseType: true
-
-            }).then((res) => {
-                let data = res.data.data
-                //data.loginAt = new Date().getTime()
-                //data.expiredAt = String(Number(data.loginAt) + Number(data.expiresIn * 1000 - 60 * 1000 * 100))
-                //localStorage.setItem('service-manager', JSON.stringify(data))
-                //alert(res.success)
-                localStorage.setItem('clerk-register', JSON.stringify(data))
-                location.href = './merchant.html'
-            }).catch((err) => {
-                alert("注册失败")
-                this.loading = false
-                throw err
-            })
+            localStorage.setItem('register-phoneNumber', this.phoneNumber)
+            localStorage.setItem('register-password', this.password)
+            location.href = './merchant.html'
         },
         gotoLogin() {
             location.href = './verifyPhone.html'
